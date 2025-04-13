@@ -1,4 +1,5 @@
 const http = require("http");
+const fs = require("fs");
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -21,12 +22,30 @@ const http = require("http");
 // WAY 3
 const server = http.createServer((req, resp) => {
   const url = req.url;
+  const method = req.method;
 
   if (url === '/') {
     resp.write('<html>');
     resp.write('<head><title>Enter Message</title></header>');
     resp.write('<body><form action="/message" method="POST"><input type="text" name="message" /><button type="submit">Send</button></form></body>');
     resp.write('</html>');
+    return resp.end();
+  }
+
+  if (url === '/message' && method === 'POST') {
+    const body = [];
+    req.on('data', (chunk) => {
+      console.log(chunk);
+      body.push(chunk);
+    });
+    req.on('end',() => {
+      const parsedBody = Buffer.concat(body).toString();
+      console.log(parsedBody);
+      const message = parsedBody.split('=')[1];
+      fs.writeFileSync('message.txt', message);
+    });
+    resp.statusCode = 302;
+    resp.setHeader('Location', '/');
     return resp.end();
   }
 
