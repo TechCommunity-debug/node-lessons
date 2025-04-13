@@ -20,7 +20,15 @@ const http = require("http");
 
 // WAY 3
 const server = http.createServer((req, resp) => {
-  console.log(req.url, req.method, req.headers);
+  const url = req.url;
+
+  if (url === '/') {
+    resp.write('<html>');
+    resp.write('<head><title>Enter Message</title></header>');
+    resp.write('<body><form action="/message" method="POST"><input type="text" name="message" /><button type="submit">Send</button></form></body>');
+    resp.write('</html>');
+    return resp.end();
+  }
 
   resp.setHeader('Content-Type', 'text/html');
   
@@ -28,6 +36,7 @@ const server = http.createServer((req, resp) => {
   resp.write('<head><title>Hello World</title></header>');
   resp.write('<body><h1>Hello World from my node server.</h1></body>');
   resp.write('</html>');
+  resp.end();
 });
 
 server.listen(3000);
