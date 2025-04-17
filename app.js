@@ -1,27 +1,15 @@
-const http = require("http");
-const routes = require("./routes");
+const express = require("express");
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+const app = express();
 
-// WAY 1
-// function reqHandler(req, res) {
-//     console.log(req);
-// }
+app.use((req, res, next) => {
+    console.log('In M1');
+    next(); // Allows the request to continue to the next middleware in line.
+})
 
-// const server = http.createServer(reqHandler);
+app.use((req, res, next) => {
+    console.log('In M2');
+    res.send('<h1>Hello World</h1>');
+})
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-// WAY 2
-// const server = http.createServer(function (req, res) {
-//   console.log(req);
-// });
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-// WAY 3
-//const server = http.createServer(routes);
-console.log(routes.someText);
-const server = http.createServer(routes.handler);
-
-server.listen(3000);
+app.listen(3000);
