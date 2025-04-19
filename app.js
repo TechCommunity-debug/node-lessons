@@ -8,7 +8,8 @@ const shopRoutes = require("./routes/shop");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(adminRoutes);
+// only routes starting with /admin (like /admin/add-product) will go into adminRoutes.
+app.use('/admin',adminRoutes);
 app.use(shopRoutes);
 
 app.use((req,res, next) => {
