@@ -9,8 +9,8 @@ const adminData = require("./admin");
 const router = express.Router();
 
 router.get("/", (req, res, next) => {
-  console.log("adminData :>> ", adminData.products);
-  res.sendFile(path.join(rootDir, "views", "shop.html"));
+  // use provided templateing engine and return that template.
+  res.render('shop');
 });
 
 module.exports = router;
