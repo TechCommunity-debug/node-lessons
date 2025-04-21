@@ -8,14 +8,6 @@ const db = require("./util/database");
 
 const app = express();
 
-db.execute("SELECT * FROM products")
-  .then((result) => {
-    console.log("result :>> ", result);
-  })
-  .catch((err) => {
-    console.log("err :>> ", err);
-  });
-
 app.set("view engine", "ejs");
 app.set("views", "views");
 
