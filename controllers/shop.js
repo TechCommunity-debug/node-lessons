@@ -102,11 +102,6 @@ exports.postCartDeleteProduct = (req, res, next) => {
     res.redirect("/cart");
   })
   .catch((err) => console.log("err :>> ", err));
-
-  Product.findByPk(prodId, product => {
-    Cart.deleteProduct(prodId, product.price);
-    res.redirect('/cart');
-  });
 };
 
 exports.getOrders = (req, res, next) => {
