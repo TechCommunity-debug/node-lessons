@@ -1,3 +1,28 @@
+const mongoose = require("mongoose");
+
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  cart: {
+    items: [
+      {
+        productId: { type: Schema.Types.ObjectId, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+  },
+});
+
+module.exports = mongoose.model("User", userSchema);
+
 // const mongodb = require("mongodb");
 
 // const ObjectId = mongodb.ObjectId;
@@ -89,7 +114,7 @@
 //   getCart() {
 //     const db = getDb();
 //     const productIds = this.cart.items.map(i => {
-//       return i.productId; 
+//       return i.productId;
 //     })
 //     return db.collection("products").find({ _id: {$in: productIds} }).toArray()
 //     .then(products => {
